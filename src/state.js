@@ -1,3 +1,5 @@
+import { observe } from './observer/index.js';
+
 export function initState(vm) {
   const opts = vm.$options;
 
@@ -23,7 +25,17 @@ function initProps(vm) {};
 
 function initMethods(vm) {};
 
-function initData(vm) {};
+function initData(vm) {
+  // 数据的初始化
+  let data = vm.$options.data;
+  // vm._data: 暴露出去给用户使用
+  data = vm._data = typeof data === 'function' ? data.call(vm) : data;
+
+  // 对象劫持  用户修改了数据可以得到通知，进行一系列操作，如更新视图
+  // MVVM模式  数据变化可以驱动视图变化
+  // 响应式
+  observe(data);
+};
 
 function initComputed(vm) {};
 
