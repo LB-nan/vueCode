@@ -10,10 +10,16 @@
   <script>
     let vm = new Vue({
       el: '#app',
-      data(){},
+      data(){
+        return {
+          name: 'aa'
+        }
+      },
       computed(){},
       watch(){}
     })
+    vm._data.name = 'bbb'
+    console.log(vm._data)
   </script>
 </body>
 </html>
