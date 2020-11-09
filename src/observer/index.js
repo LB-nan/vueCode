@@ -44,7 +44,6 @@ function defineReactive(data, key, value) {
     },
     set(newValue) {
       if (newValue === value) return;
-      console.log('aaaa')
       observe(newValue); // 如果用户输入的值仍然是对象，继续劫持 
       value = newValue;
     }
