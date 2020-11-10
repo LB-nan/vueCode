@@ -13,7 +13,6 @@ class Observer {
     // 给每一个监控过的对象增加一个属性，标识已经被劫持过，可以在其他地方拿到当前的实例
     // 并且这个标识是不可被遍历到也不可以重新配置的。
     def(value, '__ob__', this);
-
     if (Array.isArray(value)) {
       value.__proto__ = arrayMethods; // 数组操作被监听是因为它的方法是被重写的 
 
