@@ -27,7 +27,7 @@ function createASTElement(tagName, attrs) {
 
 
 function start(tagName, attrs) {
-    // 遇到开始标签开始创建ast树
+  // 遇到开始标签开始创建ast树
   let element = createASTElement(tagName, attrs);
   if (!root) {
     root = element;
@@ -50,21 +50,20 @@ function chars(text) {
 function end(tagName) {
   // 把当前的最后一个出栈，如果传入的tag和element相同，则合法，是一个闭合的标签
   let element = stack.pop();
-  // if (tagName == element.tag) {
-  // 当前元素的父级肯定是他前面的那个元素
-  currentParent = stack[stack.length - 1];
-  // 如果有父级
-  if (currentParent) {
-    element.parent = currentParent;
-    currentParent.children.push(element);
+  if (tagName == element.tag) {
+    // 当前元素的父级肯定是他前面的那个元素
+    currentParent = stack[stack.length - 1];
+    // 如果有父级
+    if (currentParent) {
+      element.parent = currentParent;
+      currentParent.children.push(element);
+    }
   }
-  // }
 }
 
 export function parseHTML(html) {
   // 不停的去解析html字符串
   while (html) {
-    console.log(html)
     let textEnd = html.indexOf('<');
     if (textEnd === 0) {
       // 如果当前索引为0，肯定是一个标签  解析标签
