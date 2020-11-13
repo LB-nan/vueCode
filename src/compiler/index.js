@@ -14,7 +14,7 @@ function genProps(attrs) {
       })
       attr.value = obj;
     }
-    str += `${attr.name}:${JSON.stringify(attr.value)}`;
+    str += `${attr.name}:${JSON.stringify(attr.value)},`;
   }
   return `{${str.slice(0,-1)}}`;
 }
@@ -60,6 +60,18 @@ function gen(node) {
     }
     // 用`+`号连接
     return `_v(${tokens.join('+')})`;
+
+    // 到此为止，拼接完毕
+
+    /*
+    HTML模板： 
+      <div id="app">
+        <p>vvv{{name}}</p>
+      </div>
+
+    转化后的字符串： _c("div",{id:"app},_c("p",undefined,_v("vvv"+_s(name))))
+    
+    */
   }
 }
 
@@ -73,10 +85,7 @@ export function compileToFunction(template) {
 
   // ast语法树转成js
   let code = generate(root);
-  console.log(code);
+  let renderFn = new Function(`with(this){ return ${code}}`);
 
-
-  return function render() {
-
-  }
+  return renderFn;
 }
